@@ -6,9 +6,12 @@ package com.alldata.JavaCourse2025.controller;/*
 
 import com.alldata.JavaCourse2025.entities.Usuario;
 import com.alldata.JavaCourse2025.serviceImpl.UsuarioServiceImpl;
+import com.alldata.abstractas.Perro;
+import com.alldata.abstractas.Pruebas;
 import org.apache.coyote.Response;
 import org.hibernate.type.internal.ImmutableNamedBasicTypeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +29,15 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> crearUsuario (@RequestBody Usuario usuario){
-        return ResponseEntity.ok(usuarioService.crearUsuario(usuario));
+        try{
+            Usuario usuarioGuardado = usuarioService.crearUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioGuardado);
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @GetMapping
+    @GetMapping({"/getAll"})
     public ResponseEntity<List<Usuario>> obtenerUsuarios(){
         return ResponseEntity.ok(usuarioService.obtenerTodosLosUsuarios());
     }

@@ -20,4 +20,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     Usuario buscarPorEmail(@Param("email")  String correo);
     @Query("SELECT u FROM Usuario u where u.nombre = :nombre AND u.edad > :edad")
     List<Usuario> buscarPorNombreyEdad(@Param("nombre") String nombre, @Param("edad") int edad);
+
+    @Override
+    default <S extends Usuario> S saveAndFlush(S entity) {
+        return entity;
+    }
 }

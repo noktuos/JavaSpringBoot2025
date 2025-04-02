@@ -13,7 +13,7 @@ import java.util.List;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
     @Column(nullable = false,length = 100)
     private String nombre;
@@ -26,6 +26,25 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Orden> ordenes;
+
+    public Usuario(Long id, String nombre, String correo, Perfil perfil, List<Orden> ordenes, int edad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.perfil = perfil;
+        this.ordenes = ordenes;
+        this.edad = edad;
+    }
+    public Usuario(String nombre, String correo, Perfil perfil, List<Orden> ordenes, int edad) {
+        this.nombre = nombre;
+        this.correo = correo;
+        this.perfil = perfil;
+        this.ordenes = ordenes;
+        this.edad = edad;
+    }
+
+    public Usuario() {
+    }
 
     public int getEdad() {
         return edad;
